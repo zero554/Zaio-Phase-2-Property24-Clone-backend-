@@ -17,7 +17,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
 
-mongoose.connect('mongodb://localhost/Property-Clone')
+mongoose.connect('mongodb+srv://Zolotov:0766576653@mongodb01-avlll.mongodb.net/test?retryWrites=true&w=majority')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.log('could not connect to MongoDB'));
 
