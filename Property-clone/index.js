@@ -7,6 +7,11 @@ const properties = require('./routes/properties');
 const customers = require('./routes/customers');
 const auth = require('./routes/auth');
 const authCustomer = require('./routes/authcustomer');
+const cors = require('cors');
+
+// Middleware
+app.use(cors());
+
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.')
