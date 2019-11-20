@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const {Agent, validateUser} = require('../models/agent');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -33,8 +32,6 @@ router.post('/', async (req, res) => {
     agent = new Agent (_.pick(req.body, ['firstName', 'lastName', 'email', 'password']));
 
 
-    const salt = await bcrypt.genSalt(10);
-    agent.password = await bcrypt.hash(agent.password, salt);
 
     await agent.save()
     const token = jwt.sign({_id: agent._id}, config.get('jwtPrivateKey'));

@@ -3,7 +3,6 @@ const {Customer, validateCustomer} = require('../models/customer');
 const router = express.Router();
 const mongoose = require('mongoose');
 const _ = require('lodash');
-const bcrypt = require('bcrypt');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 
@@ -16,8 +15,6 @@ router.post('/', async (req, res) => {
 
     customer = new Customer(_.pick(req.body, ['firstName', 'lastName', 'email', 'password']));
     
-    const salt = await bcrypt.genSalt(10);
-    customer.password = await bcrypt.hash(customer.password, salt);
 
     await customer.save(customer);
     const token = jwt.sign({ _id: customer._id}, config.get('jwtPrivateKey'));

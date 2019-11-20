@@ -2,15 +2,20 @@ const config = require('config');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
+
+
+// Middleware
+app.use(cors());
+app.options('*', cors());
+app.use('/', express.static('public/public'));
+
 const agents = require('./routes/agents');
 const properties = require('./routes/properties');
 const customers = require('./routes/customers');
 const auth = require('./routes/auth');
 const authCustomer = require('./routes/authcustomer');
-const cors = require('cors');
-
-// Middleware
-app.use(cors());
 
 
 if (!config.get('jwtPrivateKey')) {
