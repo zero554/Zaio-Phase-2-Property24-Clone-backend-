@@ -9,7 +9,6 @@ const cors = require('cors');
 // Middleware
 app.use(cors());
 app.options('*', cors());
-app.use('/', express.static('public/public'));
 
 const agents = require('./routes/agents');
 const properties = require('./routes/properties');

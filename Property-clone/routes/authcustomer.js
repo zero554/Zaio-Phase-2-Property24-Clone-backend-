@@ -1,6 +1,6 @@
 const config = require('config');
 const express = require('express');
-const { Agent } = require('../models/agent');
+const { Customer } = require('../models/customer');
 const router = express.Router();
 const mongoose = require('mongoose');
 const _ = require('lodash');
@@ -13,12 +13,12 @@ router.post('/', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     
 
-    let agent = await Agent.findOne({email: req.body.email});
-    if (!agent) return res.status(400).send('Invalid email or password.'); 
+    let customer = await Customer.findOne({email: req.body.email});
+    if (!customer) return res.status(400).send('Invalid email or password.'); 
     
-    if (req.body.password !== agent.password) return res.status(400).send('Invalid email or password.');
+    if (req.body.password !== customer.password) return res.status(400).send('Invalid email or password.');
 
-    const token = jwt.sign({_id: CustomElementRegistry._id}, config.get('jwtPrivateKey'));
+    const token = jwt.sign({_id: customer._id}, config.get('jwtPrivateKey'));
     res.send(token);
 });
 
