@@ -12,6 +12,7 @@ router.post('/',  async (req, res) => {
     if (error) return res.status(404).send(error.details[0].message);
 
     let property = Propery({
+        agent: req.body.agent,
         name: req.body.name,
         location: req.body.location,
         imageUrl: req.body.imageUrl,
@@ -39,6 +40,22 @@ router.get('/', async (req, res) => {
 
     res.send(properties);
 });
+
+router.put('/:id', async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send('Property with the given ID does not exist');
+
+    const property = await Propery.findById(req.params.id);
+    if (!property) return res.status(404).send("Property with the given ID does not exist");
+
+    property.agent = req.body.agent;
+    property.name = req.body.name,
+    property.location = req.body.location,
+    property.imageUrl = req.body.imageUrl,
+    property.price = req.body.price
+
+    await property.save();
+    res.send(property);
+})
 
 router.delete('/:id', async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send('Property with the given ID does not exist');

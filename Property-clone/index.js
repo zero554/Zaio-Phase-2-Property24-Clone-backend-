@@ -15,6 +15,7 @@ const properties = require('./routes/properties');
 const customers = require('./routes/customers');
 const auth = require('./routes/auth');
 const authCustomer = require('./routes/authcustomer');
+const searchProperties = require('./routes/searchProperties');
 
 
 if (!config.get('jwtPrivateKey')) {
@@ -37,7 +38,7 @@ app.use('/properties', properties);
 app.use('/customers', customers);
 app.use('/agents/authentication', auth);
 app.use('/customers/authentication', authCustomer);
-
+app.use('/properties/agent', searchProperties);
 
 // Port
 const port = process.env.PORT || 3000
