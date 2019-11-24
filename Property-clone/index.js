@@ -15,7 +15,7 @@ const properties = require('./routes/properties');
 const customers = require('./routes/customers');
 const auth = require('./routes/auth');
 const authCustomer = require('./routes/authcustomer');
-const searchProperties = require('./routes/searchProperties');
+const search = require('./routes/search');
 
 
 if (!config.get('jwtPrivateKey')) {
@@ -31,14 +31,13 @@ mongoose.connect('mongodb+srv://Zolotov:0766576653@mongodb01-avlll.mongodb.net/t
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.log('could not connect to MongoDB'));
 
-
 app.use(express.json());
 app.use('/agents', agents);
 app.use('/properties', properties);
 app.use('/customers', customers);
 app.use('/agents/authentication', auth);
 app.use('/customers/authentication', authCustomer);
-app.use('/properties/agent', searchProperties);
+app.use('/properties/search', search);
 
 // Port
 const port = process.env.PORT || 3000

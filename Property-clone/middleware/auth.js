@@ -2,18 +2,19 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-module.exports = function (req, res, next) {
-    const token = req.header('x-auth-token');
-    if (!token) return res.status(401).send('Access denied, no token provided');
 
-    try{
-        const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
-        req.user = decoded;
+// Token format Authorization: Bearer <token>
+
+function verifyToken(req, res, next) {
+    const bearerHeader = req.headers['authorization'];
+    if (typeof bearerHeader !== 'undefined') {
+
+        const token = bearerHeader.split(' ')[1];
+        req.token = token;
         next();
     }
-    catch(ex) {
-        res.status(400).send('Invalid token.');
-    }
-    
-}
+    else {res.sendStatus(403);}
 
+};
+
+module.exports.verifyToken = verifyToken;

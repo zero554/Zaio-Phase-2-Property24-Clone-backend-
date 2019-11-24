@@ -18,9 +18,14 @@ router.post('/', async (req, res) => {
     
 
     if (req.body.password !== agent.password) return res.status(400).send('Invalid email or password.');
-    const token = jwt.sign({ _id: agent._id}, config.get('jwtPrivateKey'));
+    // const token = jwt.sign({ _id: agent._id}, config.get('jwtPrivateKey'));
 
-    res.send(token);
+    //res.send(token);
+
+    jwt.sign({ _id: agent._id}, config.get('jwtPrivateKey'), (error, token) => {
+        res.json({agent, token});
+    });
+
 });
 
 function validate(req) {
