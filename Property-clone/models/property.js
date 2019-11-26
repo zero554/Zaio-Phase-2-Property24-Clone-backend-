@@ -5,7 +5,7 @@ const Joi = require('joi');
 const Propery = mongoose.model('properties', new mongoose.Schema({
     agent: {type: String, required: true, minlength: 3}, 
     name: {type: String, required: true, minlength: 3},
-    location: {type: String, required: true, minlength: 3},
+    location: {type: String, required: true, minlength: 3, unique: true},
     imageUrl: {type: String, required: true, minlength: 5},
     price: {type: String, required: true, minlength: 1}
 }));

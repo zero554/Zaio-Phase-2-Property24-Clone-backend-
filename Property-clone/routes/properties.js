@@ -25,8 +25,11 @@ router.post('/', verifyToken, async (req, res) => {
                 price: req.body.price
             });
 
-            await property.save();
-            res.send(property);
+            try{
+                await property.save();
+                res.send(property);
+            }
+            catch {res.sendStatus(403);}
         } 
     });
 
@@ -50,20 +53,27 @@ router.get('/', async (req, res) => {
     res.send(properties);
 });
 
-router.put('/:id', async (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send('Property with the given ID does not exist');
+router.put('/:id', verifyToken, async (req, res) => {
 
-    const property = await Propery.findById(req.params.id);
-    if (!property) return res.status(404).send("Property with the given ID does not exist");
+    jwt.verify(req.token, config.get('jwtPrivateKey'), async (error) => {
+        if (error) return sendStatus(403);
+        else{
+            if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send('Property with the given ID does not exist');
 
-    property.agent = req.body.agent;
-    property.name = req.body.name,
-    property.location = req.body.location,
-    property.imageUrl = req.body.imageUrl,
-    property.price = req.body.price
+            const property = await Propery.findById(req.params.id);
+            if (!property) return res.status(404).send("Property with the given ID does not exist");
 
-    await property.save();
-    res.send(property);
+            property.agent = req.body.agent;
+            property.name = req.body.name,
+            property.location = req.body.location,
+            property.imageUrl = req.body.imageUrl,
+            property.price = req.body.price
+
+            await property.save();
+            res.send(property);
+        }
+    });
+
 })
 
 router.delete('/:id', verifyToken, async (req, res) => {

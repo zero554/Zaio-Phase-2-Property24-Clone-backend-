@@ -21,5 +21,12 @@ router.post('/', async (req, res) => {
 
     res.send(token);});
 
+router.get('/', async (req, res) => {
+    const customers = await Customer
+        .find({})
+        .sort({firstName: 1});
+    
+    res.send(customers);
+})
 
 module.exports = router;
