@@ -37,11 +37,16 @@ router.post('/', verifyToken, async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send('Property with the given ID does not exist');
-
     const property = await Propery.findById(req.params.id);
     if (!property) return res.status(404).send("Property with the given ID does not exist");
+
+    /* if (property.views === 0) change the views back to 4 in an hour and then return sendStatus(403);
+    else {
+        property.views = property.view--;
+        res.send(property);
+    }
+    */
     res.send(property);
 });
 
