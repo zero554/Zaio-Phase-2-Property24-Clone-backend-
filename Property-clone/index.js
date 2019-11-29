@@ -26,6 +26,7 @@ if (!config.get('jwtPrivateKey')) {
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect('mongodb+srv://Zolotov:0766576653@mongodb01-avlll.mongodb.net/test?retryWrites=true&w=majority')
     .then(() => console.log('Connected to MongoDB...'))
