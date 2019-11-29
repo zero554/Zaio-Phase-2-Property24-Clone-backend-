@@ -36,7 +36,8 @@ router.post('/', async (req, res) => {
     await agent.save()
     const token = jwt.sign({_id: agent._id}, config.get('jwtPrivateKey'));
 
-    res.header('x-auth-token', token).send(token);
+    //res.header('x-auth-token', token).send(token);
+    res.json({agent, token});
 
 });
 
